@@ -3,9 +3,12 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var port = process.env.PORT || 4201;
 
-
 var app = express();
 
+//importar las rutas
+
+
+//configurar conexión a mongodb
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/sistema',{useUnifiedTopology: true, useNewUrlParser: true},(err, res)=>{
     if(err){
