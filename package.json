@@ -1,6 +1,7 @@
 {
   "name": "back-",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./app.js"
@@ -19,14 +20,5 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MauryxDO/backend_sistema_ventas.git"
-  },
-  "bugs": {
-    "url": "https://github.com/MauryxDO/backend_sistema_ventas/issues"
-  },
-  "homepage": "https://github.com/MauryxDO/backend_sistema_ventas#readme",
-  "description": ""
+  }
 }
