@@ -1,0 +1,1 @@
+//Configuracion para el almacen de imagenes
