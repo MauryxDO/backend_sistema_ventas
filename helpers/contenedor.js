@@ -1,1 +1,0 @@
-//Configuración para el renderizado de figuras 
