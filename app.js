@@ -6,7 +6,8 @@ var port = process.env.PORT || 4201;
 var app = express();
 
 //importar las rutas
-
+var user_routes = require('./routes/user');
+var categoria_routes = require('./routes/categoria');
 
 //configurar conexión a mongodb
 mongoose.Promise = global.Promise;
@@ -24,8 +25,12 @@ mongoose.connect('mongodb://localhost:27017/sistema',{useUnifiedTopology: true, 
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+//Registro de rutas Usuario
 app.use('/api',user_routes)
 
+//Categoria
+app.use('/api',categoria_routes)
 
 
 module.exports = app;

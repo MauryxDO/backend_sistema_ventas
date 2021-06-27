@@ -1,4 +1,3 @@
-//Configuración para el renderizado de figuras
 var jwt = require('jwt-simple');
 var moment = require('moment');
 var secret = '03041200'
