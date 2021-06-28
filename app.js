@@ -8,6 +8,7 @@ var app = express();
 //importar las rutas
 var user_routes = require('./routes/user');
 var categoria_routes = require('./routes/categoria');
+var producto_routes = require('./routes/producto');
 
 //configurar conexión a mongodb
 mongoose.Promise = global.Promise;
@@ -31,6 +32,9 @@ app.use('/api',user_routes)
 
 //Categoria
 app.use('/api',categoria_routes)
+//Producto
+app.use('/api',producto_routes);
+
 
 
 module.exports = app;
