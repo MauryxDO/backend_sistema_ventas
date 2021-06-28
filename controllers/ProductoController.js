@@ -78,8 +78,15 @@ function listar(req, res){
 function editar(req, res){
     var data = req.body;
     var id = req.params['id'];
+    
+    var img = req.params['img'];
+        if (req.files) {
 
-    if (req.files) {
+            //Actualizarla por una nueva desde la raiz de la carpeta
+            fs.unlink('./uploads/productos/'+img, (err)=>{
+                if(err) throw err;
+            });
+
         var imagen_path = req.files.imagen.path;
         var name = imagen_path.split('\\');
         var imagen_name = name[2];
@@ -107,30 +114,27 @@ function editar(req, res){
             }
         });
         //CODIGO PARA LA ACTUALIZACIÓN SIN IMAGEN
-    }else{
-        Producto.findByIdAndUpdate({_id:id},{
-            titulo: data.titulo,
-            descripcion: data.descripcion,
-            precio_compra: data.precio_compra,
-            precio_venta: data.precio_venta,
-            stock: data.stock,
-            idcategoria: data.idcategoria,
-            puntos: data.puntos,
-        }, (err, producto_edit)=>{
-            if(err){
-                res.status(500).send({message: 'error en el servidor'});
-            }else{
-                if(producto_edit){
-                    res.status(200).send({message: 'El producto fue actualizado'});
+        }else{
+            Producto.findByIdAndUpdate({_id:id},{
+                titulo: data.titulo,
+                descripcion: data.descripcion,
+                precio_compra: data.precio_compra,
+                precio_venta: data.precio_venta,
+                stock: data.stock,
+                idcategoria: data.idcategoria,
+                puntos: data.puntos,
+            }, (err, producto_edit)=>{
+                if(err){
+                    res.status(500).send({message: 'error en el servidor'});
                 }else{
-                    res.status(402).send({message: 'No se modifico el producto'})
+                    if(producto_edit){
+                        res.status(200).send({message: 'El producto fue actualizado'});
+                    }else{
+                        res.status(402).send({message: 'No se modifico el producto'})
+                    }
                 }
-            }
-        });
-    }
-
-
-
+            });
+        }
 
 }
 
@@ -168,10 +172,32 @@ function eliminar(req, res){
     })
 }
 
+//FUNCIÓN AUMENTAR STOCK
+function update_stock(req, res){
+    var id = req.params['id'];
+    let data = req.body;
+
+    Producto.findById(id,(err,producto_data)=>{
+        if(producto_data){
+            Producto.findByIdAndUpdate(id,{
+                stock: parseInt(producto_data.stock) + parseInt(data.stock)
+            }, (err, producto_edit)=>{
+                if(producto_edit){
+                    res.status(200).send({message: 'El stock ha aumentado a ' + data.stock + ' unidades'});
+                }
+            });
+        }else{
+            res.status(402).send(err);
+        }
+    })
+}
+
+
 module.exports ={
     registrar,
     listar,
     editar,
     obtener_producto,
     eliminar,
+    update_stock,
 }
