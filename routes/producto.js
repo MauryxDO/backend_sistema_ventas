@@ -17,4 +17,7 @@ api.get('/producto/registro/:id',productoController.obtener_producto);
 //eliminar
 api.delete('/producto/:id',productoController.eliminar);
 
+//Aumentar stock
+api.put('/producto/stock/:id',productoController.update_stock);
+
 module.exports = api;
