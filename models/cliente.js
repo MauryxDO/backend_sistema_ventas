@@ -6,6 +6,8 @@ var ClienteSchema = Schema({
     nombres: String,
     correo: String,
     puntos: Number,
+
+    createAt: {type: Date, default: Date.now}
     
 });
 
