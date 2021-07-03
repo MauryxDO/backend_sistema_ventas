@@ -1,21 +1,15 @@
-var express = require('express');
-var categoriaController = require('../controllers/CategoriaController');
+import routerx from 'express-promise-router';
+import categoriaController from '../controllers/CategoriaController';
+import auth from '../middlewares/auth';
 
-var api = express.Router();
+const router=routerx();
 
-//Registrar categoria
-api.post('/categoria/registrar',categoriaController.registrar);
+router.post('/add',auth.verifyAlmacenero,categoriaController.add);
+router.get('/query',auth.verifyAlmacenero,categoriaController.query);
+router.get('/list',auth.verifyAlmacenero,categoriaController.list);
+router.put('/update',auth.verifyAlmacenero,categoriaController.update);
+router.delete('/remove',auth.verifyAlmacenero,categoriaController.remove);
+router.put('/activate',auth.verifyAlmacenero,categoriaController.activate);
+router.put('/deactivate',auth.verifyAlmacenero,categoriaController.deactivate);
 
-//Obtener categoria por ID
-api.get('/categoria/:id',categoriaController.obtener_categoria)
-
-//Actualizar una categoria por ID
-api.put('/categoria/editar/:id',categoriaController.editar);
-
-//Eliminar una categoria por ID
-api.delete('/categoria/eliminar/:id',categoriaController.eliminar);
-
-//Filtrar datos
-api.get('/categorias/:nombre?',categoriaController.listar);
-
-module.exports = api;
+export default router;
