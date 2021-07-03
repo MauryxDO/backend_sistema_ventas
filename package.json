@@ -1,32 +1,27 @@
 {
-  "name": "back-",
+  "name": "sistema",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./app.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js --exec babel-node"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
-    "body-parser": "^1.19.0",
-    "connect-multiparty": "^2.2.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "jwt-simple": "^0.5.6",
-    "moment": "^2.29.1",
-    "mongoose": "^5.12.14"
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-promise-router": "^3.0.3",
+    "jsonwebtoken": "^8.5.0",
+    "mongoose": "^5.13.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MauryxDO/backend_sistema_ventas.git"
-  },
-  "bugs": {
-    "url": "https://github.com/MauryxDO/backend_sistema_ventas/issues"
-  },
-  "homepage": "https://github.com/MauryxDO/backend_sistema_ventas#readme",
-  "description": ""
+    "nodemon": "^1.18.9"
+  }
 }
