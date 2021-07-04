@@ -8,7 +8,7 @@ import router from './routes';
 mongoose.Promise=global.Promise;
 const dbUrl = 'mongodb://localhost:27017/dbsistema';
 //Para solucionar los errores de mongo se debe poner el codigo siguiente tuve algunos problemas pero se soluciono xD
-mongoose.connect(dbUrl, {useCreateIndex:true, useNewUrlParser: true, useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(dbUrl, {useCreateIndex:true, useNewUrlParser: true, useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
 .then(mongoose => console.log('Conectado a la BD en el puerto 27017'))
 .catch(err => console.log(err));
 
