@@ -112,5 +112,24 @@ export default {
             });
             next(e);
         }
-    }
+    },
+     //Obtener Articulo por medio de su codigo
+    queryCodigo: async (req,res,next) => {
+        try {
+            const reg=await models.Articulo.findOne({codigo:req.query.codigo})
+            .populate('categoria',{nombre:1});//Referenciando a la tabla categoria con populate
+            if (!reg){
+                res.status(404).send({
+                    message: 'El registro no existe'
+                });
+            } else{
+                res.status(200).json(reg);
+            }
+        } catch(e){
+            res.status(500).send({
+                message:'Ocurrió un error'
+            });
+            next(e);
+        }
+    },
 }
