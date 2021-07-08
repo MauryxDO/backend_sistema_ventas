@@ -100,7 +100,7 @@ export default {
                     telefono:req.body.telefono,
                     email:req.body.email,
                 });
-            res.status(200).json(reg);
+            res.status(200).json({message: 'La información ha sido actualizada'});
         } catch(e){
             res.status(500).send({
                 message:'Ocurrió un error'
@@ -113,7 +113,7 @@ export default {
     remove: async (req,res,next) => {
         try {
             const reg = await models.Persona.findByIdAndDelete({_id:req.body._id});
-            res.status(200).json(reg);
+            res.status(200).json({message: 'Los datos han sido eliminados'});
         } catch(e){
             res.status(500).send({
                 message:'Ocurrió un error'

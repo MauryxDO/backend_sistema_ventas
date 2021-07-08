@@ -80,7 +80,7 @@ export default {
             detalles.map(function(x){
                 disminuirStock(x._id,x.cantidad);
             });
-            res.status(200).json(reg);
+            res.status(200).json({messgae: 'La venta ha sido habilitada'});
         } catch(e){
             res.status(500).send({
                 message:'Ocurrió un error'
@@ -98,7 +98,7 @@ export default {
             detalles.map(function(x){
                 aumentarStock(x._id,x.cantidad);
             });
-            res.status(200).json(reg);
+            res.status(200).json({messgae: 'La venta ha sido deshabilitada'});
         } catch(e){
             res.status(500).send({
                 message:'Ocurrió un error'

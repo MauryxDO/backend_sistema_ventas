@@ -14,7 +14,7 @@ async function disminuirStock(idarticulo,cantidad){
 export default {
 
     //Este controlador funciona como un historial de todos los ingresos que se han adquirido
-
+    
     //Registrar ingreso
     add: async (req,res,next) =>{
         try {

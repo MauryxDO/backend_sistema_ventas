@@ -68,7 +68,8 @@ export default {
                 {rol:req.body.rol,nombre:req.body.nombre,
                     direccion:req.body.direccion,telefono:req.body.telefono,
                     email:req.body.email,
-                    password:req.body.password});
+                    password:req.body.password
+                });
             res.status(200).json(reg);
         } catch(e){
             res.status(500).send({
