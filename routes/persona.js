@@ -4,7 +4,7 @@ import auth from '../middlewares/auth';
 const router=routerx();
 
 router.post('/add',personaController.add);
-router.get('/query',auth.verifyUsuario,personaController.query);
+router.get('/query',personaController.query);
 router.get('/list',auth.verifyUsuario,personaController.list);
 router.get('/listClientes',auth.verifyUsuario,personaController.listClientes);
 router.get('/listProveedores',auth.verifyUsuario,personaController.listProveedores);
