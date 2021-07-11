@@ -1,6 +1,7 @@
 import routerx from 'express-promise-router';
 import usuarioController from '../controllers/UsuarioController';
 import auth from '../middlewares/auth';
+
 const router=routerx();
 
 //Ruta registrar nuevo usuario, solo el administrador podra agregar nuevos usuarios al sistema con su respectivo rol

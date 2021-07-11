@@ -7,7 +7,14 @@ const usuarioSchema = new Schema({
     email: { type:String, maxlength:50, unique:true, required:true},
     password: { type:String, maxlength:64, required:true},
     estado: { type:Number, default:1},
-	createdAt: { type: Date, default: Date.now }
+	createdAt: { type: Date, default: Date.now },
+    online: {type: Boolean, default: false}
+});
+
+usuarioSchema.method('toJSON', function() {
+    const { __v, _id, password, ...object } = this.toObject();
+    object.uid = _id;
+    return object;
 });
 
 const Usuario = mongoose.model('usuario',usuarioSchema);
