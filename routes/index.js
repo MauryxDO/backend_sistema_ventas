@@ -5,6 +5,7 @@ import usuarioRouter from './usuario';
 import personaRouter from './persona';
 import ingresoRouter from './ingreso';
 import ventaRouter from './venta';
+import mensajeRouter from './mensaje';
 
 const router=routerx();
 
@@ -14,5 +15,6 @@ router.use('/usuario',usuarioRouter);
 router.use('/persona',personaRouter);
 router.use('/ingreso',ingresoRouter);
 router.use('/venta',ventaRouter);
+router.use('/mensajes',mensajeRouter);
 
 export default router;
