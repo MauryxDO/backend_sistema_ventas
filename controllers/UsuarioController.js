@@ -21,7 +21,7 @@ export default {
     //Obtener Usuario por ID
     query: async (req,res,next) => {
         try {
-            const reg=await models.Usuario.findOne({_id:req.query._id});
+            const reg=await models.Usuario.findOne({uid:req.query.uid});
             if (!reg){
                 res.status(404).send({
                     message: 'El registro no existe'
@@ -59,12 +59,12 @@ export default {
     update: async (req,res,next) => {
         try {
             let pas = req.body.password;
-            const reg0 = await models.Usuario.findOne({_id:req.body._id});
+            const reg0 = await models.Usuario.findOne({uid:req.body.uid});
             if (pas!=reg0.password){
                 req.body.password = await bcrypt.hash(req.body.password,10); 
             }                 
             const reg = await models.Usuario.findByIdAndUpdate(
-                {_id:req.body._id},
+                {uid:req.body.uid},
                 {rol:req.body.rol,nombre:req.body.nombre,
                     direccion:req.body.direccion,telefono:req.body.telefono,
                     email:req.body.email,
@@ -82,7 +82,7 @@ export default {
     //eliminar usuario
     remove: async (req,res,next) => {
         try {
-            const reg = await models.Usuario.findByIdAndDelete({_id:req.body._id});
+            const reg = await models.Usuario.findByIdAndDelete({uid:req.body.uid});
             res.status(200).json(reg);
         } catch(e){
             res.status(500).send({
@@ -95,7 +95,7 @@ export default {
     //Habilitar usuario acceso al sistema
     activate: async (req,res,next) => {
         try {
-            const reg = await models.Usuario.findByIdAndUpdate({_id:req.body._id},{estado:1});
+            const reg = await models.Usuario.findByIdAndUpdate({uid:req.body.uid},{estado:1});
             res.status(200).json(reg);
         } catch(e){
             res.status(500).send({
@@ -108,7 +108,7 @@ export default {
     //inhabilitar usuario acceso al sistema
     deactivate:async (req,res,next) => {
         try {
-            const reg = await models.Usuario.findByIdAndUpdate({_id:req.body._id},{estado:0});
+            const reg = await models.Usuario.findByIdAndUpdate({uid:req.body.uid},{estado:0});
             res.status(200).json(reg);
         } catch(e){
             res.status(500).send({
@@ -128,7 +128,7 @@ export default {
                 let match = await bcrypt.compare(req.body.password,user.password);
                 if (match){
                     //Generando token al usuario por medio del ID
-                    let tokenReturn = await token.encode(user._id);
+                    let tokenReturn = await token.encode(user.uid);
                     res.status(200).json({user,tokenReturn});
                 } else{
                     res.status(404).send({
