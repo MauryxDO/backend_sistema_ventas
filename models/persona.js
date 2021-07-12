@@ -7,9 +7,18 @@ const personaSchema = new Schema({
     direccion: { type:String, maxlength:70},
     telefono: { type:String, maxlength:20},
     email: { type:String, maxlength:50, unique:true},
+    password: { type:String, maxlength:64, required:true},
     estado: { type:Number, default:1},
-	createdAt: { type: Date, default: Date.now }
+	createdAt: { type: Date, default: Date.now },
+    online: {type: Boolean, default: false},
 });
+
+personaSchema.method('toJSON', function() {
+    const { __v, _id, password, ...object } = this.toObject();
+    object.uid = _id;
+    return object;
+});
+
 
 const Persona = mongoose.model('persona',personaSchema);
 export default Persona;
