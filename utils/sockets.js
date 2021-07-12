@@ -15,17 +15,17 @@ exports.chatSocket = (socket)=>{
             // Unir al usuario a una sala de socket.io
             socket.join( uid );
 
-            // TODO: Validar el JWT 
+            // Validar el JWT 
             // Si el token no es válido, desconectar
 
-            // TODO: Saber que usuario está activo mediante el UID
+            // Saber que usuario está activo mediante el UID
 
-            // TODO: Emitir todos los usuarios conectados
+            // Emitir todos los usuarios conectados
             this.io.emit( 'lista-usuarios',  models.getUsuarios() )
 
-            // TODO: Socket join, uid
+            //Socket join, uid
 
-            // TODO: Escuchar cuando el cliente manda un mensaje
+            // Escuchar cuando el cliente manda un mensaje
             socket.on( 'mensaje-personal', async( payload ) => {
                 const mensaje =  models.grabarMensaje( payload );
                 this.io.to( payload.para ).emit( 'mensaje-personal', mensaje );
@@ -33,9 +33,9 @@ exports.chatSocket = (socket)=>{
             });
             
 
-            // TODO: Disconnect
+            // Disconnect
             // Marcar en la BD que el usuario se desconecto
-            // TODO: Emitir todos los usuarios conectados
+            // Emitir todos los usuarios conectados
             socket.on('disconnect', async() => {
                 models.usuarioDesconectado( uid );
                 this.io.emit( 'lista-usuarios',  models.getUsuarios() )
