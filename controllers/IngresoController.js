@@ -141,4 +141,22 @@ export default {
         }
     },
 
+    consultaFechas: async (req,res,next) => {
+        try {
+            let start=req.query.start;
+            let end=req.query.end;
+            const reg=await models.Ingreso.find({"createdAt": {"$gte": start, "$lt": end}})
+            .populate('usuario',{nombre:1})
+            .populate('persona',{nombre:1})
+            .sort({'createdAt':-1});
+            res.status(200).json(reg);
+        } catch(e){
+            res.status(500).send({
+                message:'Ocurrió un error'
+            });
+            next(e);
+        }
+    },
+
+
 }

@@ -9,6 +9,6 @@ router.get('/query',auth.verifyVendedor,ventaController.query);
 router.get('/list',auth.verifyVendedor,ventaController.list);
 router.put('/activate',auth.verifyVendedor,ventaController.activate);
 router.put('/deactivate',auth.verifyVendedor,ventaController.deactivate);
-router.get('/consulta',auth.verifyAlmacenero,ventaController.grafico);
-
+router.get('/grafico',auth.verifyAlmacenero,ventaController.grafico);
+router.get('/consulta',auth.verifyAlmacenero,ventaController.consultaFechas);
 export default router;
