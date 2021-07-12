@@ -17,7 +17,7 @@ export default {
     //Obtener cliente por ID
     query: async (req,res,next) => {
         try {
-            const reg=await models.Persona.findOne({_id:req.query._id});
+            const reg=await models.Persona.findOne({uid:req.query.uid});
             if (!reg){
                 res.status(404).send({
                     message: 'El registro no existe'
@@ -93,7 +93,7 @@ export default {
     update: async (req,res,next) => {
         try {         
             const reg = await models.Persona.findByIdAndUpdate({
-                _id:req.body._id},
+                uid:req.body.uid},
                 {tipo_persona:req.body.tipo_persona,
                     nombre:req.body.nombre,
                     direccion:req.body.direccion,
@@ -112,7 +112,7 @@ export default {
     //Eliminar Clientes y provedores
     remove: async (req,res,next) => {
         try {
-            const reg = await models.Persona.findByIdAndDelete({_id:req.body._id});
+            const reg = await models.Persona.findByIdAndDelete({uid:req.body.uid});
             res.status(200).json({message: 'Los datos han sido eliminados'});
         } catch(e){
             res.status(500).send({
@@ -125,7 +125,7 @@ export default {
     //Habilitar Cliente o provedor
     activate: async (req,res,next) => {
         try {
-            const reg = await models.Persona.findByIdAndUpdate({_id:req.body._id},{estado:1});
+            const reg = await models.Persona.findByIdAndUpdate({uid:req.body.uid},{estado:1});
             res.status(200).json(reg);
         } catch(e){
             res.status(500).send({
@@ -138,7 +138,7 @@ export default {
     //Deshabilitar Cliente o provedor
     deactivate:async (req,res,next) => {
         try {
-            const reg = await models.Persona.findByIdAndUpdate({_id:req.body._id},{estado:0});
+            const reg = await models.Persona.findByIdAndUpdate({uid:req.body.uid},{estado:0});
             res.status(200).json(reg);
         } catch(e){
             res.status(500).send({
