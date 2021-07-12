@@ -10,10 +10,13 @@ import {chatSocket} from './utils/sockets';
 //Conexión a la base de datos MongoDB
 mongoose.Promise=global.Promise;
 
-const dbUrl = 'mongodb://localhost:27017/dbsistema';
+//const dbUrl = 'mongodb://localhost:27017/dbsistema';
+
+//Conectando base de datos a nube
+const dbUrl = 'mongodb+srv://MauryxDo:aQS8veRnSvhUOATC@mybd.hmuse.mongodb.net/dbsistema?retryWrites=true&w=majority'
 
 //Para solucionar los errores de mongo se debe poner el codigo siguiente tuve algunos problemas pero se soluciono xD
-mongoose.connect(dbUrl, 
+mongoose.connect(dbUrl,
     {
     useCreateIndex:true,
     useNewUrlParser: true,
