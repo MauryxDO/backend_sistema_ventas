@@ -14,7 +14,7 @@ async function disminuirStock(idarticulo,cantidad){
 export default {
 
     //Este controlador funciona como un historial de todos los ingresos que se han adquirido
-    
+
     //Registrar ingreso
     add: async (req,res,next) =>{
         try {
@@ -32,7 +32,7 @@ export default {
             next(e);
         }
     },
-    
+
     //Listar Ingreso por medio de ID
     query: async (req,res,next) => {
         try {
@@ -54,7 +54,7 @@ export default {
         }
     },
 
-    //Listando Ingresos 
+    //Listando Ingresos
     list: async (req,res,next) => {
         try {
             let valor=req.query.valor;
@@ -108,5 +108,37 @@ export default {
             });
             next(e);
         }
-    }
+    },
+
+    grafico:async(req,res,next) =>{
+        try {
+            const reg=await models.Venta.aggregate(
+                [
+                    {
+                        $group:{
+                            _id:{
+                                mes:{$month:"$createdAt"},
+                                year:{$year: "$createdAt"}
+                            },
+                            total:{$sum:"$total"},
+                            numero:{$sum:1}
+                        }
+                    },
+                    {
+                        $sort:{
+                            "_id.year":-1,"_id.mes":-1
+                        }
+                    }
+                ]
+            ).limit(12);
+
+            res.status(200).json(reg);
+        } catch(e){
+                res.status(500).send({
+                    message:'Ocurrió un error'
+                });
+                next(e);
+        }
+    },
+
 }
