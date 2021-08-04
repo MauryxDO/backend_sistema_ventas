@@ -1,7 +1,7 @@
 import models from '../models';
 import bcrypt from 'bcryptjs';
 import token from '../services/token';
-
+const { transporter } = require('../utils/passwordReset');
 export default {
 
     //Agregar Usuario
@@ -146,5 +146,105 @@ export default {
             });
             next(e);
         }
-    }
+    },
+
+    //Restaurar contraseña
+    forgotPassword: async(req,res,next)=>{
+        try {
+            let email = req.body.email;
+            if(!email){
+                res.status(400).json({
+                    error: true,
+                    message: 'Se debe proporcionar un email.',
+                });
+            }
+
+            //buscar usuario con el email
+            const user = await models.Usuario.findOne({ 
+                email:req.body.email,estado:1
+            });
+
+            if (!user) {
+                res.status(404).json({
+                    error: true,
+                    message: 'No existe el email.',
+                });
+            }
+            // generar token y enviar email
+            let tokenReturn = await token.encode(user.uid);
+            user.resetToken = tokenReturn;
+
+            await transporter.sendMail({
+                from: '"Forgot password" <mau03041@gmail.com>', // sender address
+                to: user.email, // list of receivers
+                subject: "Forgot password ✔", // Subject line
+                html: `<b>Por favor da clic en el enlace</b>
+                        <a href="${tokenReturn}">${tokenReturn}</a>
+                `, // html body
+            });
+
+            if (tokenReturn){
+                res.json({
+                    message: 'Se ha enviado el correo de recuperación.',
+                });
+            }else{
+                res.status(503).json({
+                    error: true,
+                    message: 'Ocurrió un error al enviar el correo de recuperación.',
+                });
+            }
+        } catch (error) {
+                console.error(error);
+            res.status(503).json({
+                error: true,
+                message: 'Error al enviar el correo de recuperación.',
+            });
+        }
+    },
+
+    //Validación de tokens
+    newPassword: async(req,res,next)=>{
+        try {
+            let tokenReturn = await token.encode(user.uid);
+            let password = await  models.Usuario.findOne({password:req.body.password});
+            //validar el token
+            const user = await models.Usuario.findOne({ 
+                passwordResetToken: tokenReturn,
+                email:req.body.email,estado:1
+            });
+    
+            if (!user) {
+                res.status(400).json({
+                    message: 'El token es invalido o ha expirado'
+                });
+            }
+            // comprobar que nos envio la nueva contraseña
+            if (!password) {
+                res.json({
+                    error: true,
+                    message: 'La contraseña es obligatoria'
+                });
+            }
+    
+            // cifrar la contraseña
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(password, salt);
+            // quitar el token de recuperacion
+            user.passwordResetToken = '';
+            user.passwordResetExpire = null;
+            await user.save();
+    
+            res.json({
+                message: 'Se ha actualizado la contraseña correctamente'
+            })
+    
+        } catch (error) {
+            console.error(error);
+            res.status(503).json({
+                error: true,
+                message: 'Error al guardar la nueva contraseña',
+            });
+        }
+    },
+
 }

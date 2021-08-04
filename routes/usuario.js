@@ -25,7 +25,13 @@ router.put('/activate',auth.verifyAdministrador,usuarioController.activate);
 //Inhabilitar usuario rol administrador
 router.put('/deactivate',auth.verifyAdministrador,usuarioController.deactivate);
 
-
+//Login usuarios
 router.post('/login',usuarioController.login);
+
+//Recuperar contraseña
+router.put('/recuperar',usuarioController.forgotPassword);
+
+//Crear nueva contraseña
+router.put('/newPassword',auth.verifyUsuario,usuarioController.newPassword);
 
 export default router;
