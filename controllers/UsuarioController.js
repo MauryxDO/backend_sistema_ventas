@@ -7,11 +7,36 @@ export default {
     //Agregar Usuario
     add: async (req,res,next) =>{
         try {
+            const existeEmail = await models.Usuario.findOne({email:req.body.email});
+            if ( existeEmail ) {
+                return res.status(400).json({
+                    ok: false,
+                    message: 'El correo ya existe'
+                });
+            }
+            if (!req.body.email) {
+                res.status(400).json({ message: 'El correo es obligatorio' });
+                next();
+            }
+            if (!req.body.password) {
+                res.status(400).json({ message: 'La contraseña es obligatoria' });
+                next();
+            }else{
             req.body.password = await bcrypt.hash(req.body.password,10);
-            const reg = await models.Usuario.create(req.body);
-            res.status(200).json({message: 'Se ha agregado un nuevo '+ req.body.rol});
+            const user = await models.Usuario.create(req.body);
+            // Evitar enviar la password
+            user.password = null;
+    
+            let reg = {
+                response: 'Ok',
+                message: 'Se ha registrado el usuario',
+                user,
+            }
+            res.json(reg)
+            }
         } catch (e){
             res.status(500).send({
+                error: true,
                 message:'Ocurrió un error'
             });
             next(e);
@@ -59,18 +84,18 @@ export default {
     update: async (req,res,next) => {
         try {
             let pas = req.body.password;
-            const reg0 = await models.Usuario.findOne({uid:req.body.uid});
+            const reg0 = await models.Usuario.findOne({_id:req.body._id});
             if (pas!=reg0.password){
                 req.body.password = await bcrypt.hash(req.body.password,10); 
-            }                 
+            }            
             const reg = await models.Usuario.findByIdAndUpdate(
-                {uid:req.body.uid},
+                {_id:req.body._id},
                 {rol:req.body.rol,nombre:req.body.nombre,
                     direccion:req.body.direccion,telefono:req.body.telefono,
                     email:req.body.email,
                     password:req.body.password
                 });
-            res.status(200).json(reg);
+            res.status(200).json({message:"Usuario actualizado",reg});
         } catch(e){
             res.status(500).send({
                 message:'Ocurrió un error'
@@ -82,8 +107,14 @@ export default {
     //eliminar usuario
     remove: async (req,res,next) => {
         try {
-            const reg = await models.Usuario.findByIdAndDelete({uid:req.body.uid});
-            res.status(200).json(reg);
+            const reg = await models.Usuario.findByIdAndDelete({_id:req.body._id});
+            if (!reg){
+                res.status(404).send({
+                    message: 'El registro no existe'
+                });
+            }else{ 
+            res.status(200).json({message: 'El usuario ha sido eliminado'});
+        }
         } catch(e){
             res.status(500).send({
                 message:'Ocurrió un error'
@@ -142,6 +173,7 @@ export default {
             }
         } catch(e){
             res.status(500).send({
+                error: true,
                 message:'Ocurrió un error'
             });
             next(e);

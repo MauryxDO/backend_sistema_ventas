@@ -66,7 +66,7 @@ export default {
                 descripcion:req.body.descripcion,
                 precio_venta:req.body.precio_venta,
                 stock:req.body.stock});
-            res.status(200).json('El articulo ha sido actualizado');
+            res.status(200).json({message:'El articulo ha sido actualizado'});
         } catch(e){
             res.status(500).send({
                 message:'Ocurrió un error'
