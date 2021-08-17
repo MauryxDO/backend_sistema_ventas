@@ -4,7 +4,7 @@ import auth from '../middlewares/auth';
 
 const router=routerx();
 
-//Consultar usuarios solo el administrador
+//Consultar mensajes solo el administrador
 router.get('/de',auth.verifyUsuario,mensajeController.obtenerChat);
 
 export default router;

@@ -3,8 +3,8 @@ const ingresoSchema = new Schema({
     usuario:{type: Schema.ObjectId, ref: 'usuario',required:true },
     persona:{ type: Schema.ObjectId, ref: 'persona',required:true },
     tipo_comprobante:{ type:String,maxlength:20,required:true},
-    serie_comprobante: { type:String,maxlength:7},
-    num_comprobante: { type:String,maxlength:10,required:true},
+    serie_comprobante: { type:String,maxlength:7, unique:true},
+    num_comprobante: { type:String,maxlength:10,required:true, unique:true},
     impuesto:{ type:Number, required:true},
     total:{ type:Number, required:true},
     //Modelar de manera embebida la relación 1 a muchos

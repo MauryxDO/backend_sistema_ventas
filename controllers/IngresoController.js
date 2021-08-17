@@ -44,7 +44,7 @@ export default {
                     message: 'El registro no existe'
                 });
             } else{
-                res.status(200).json(reg);
+                res.status(200).json({reg});
             }
         } catch(e){
             res.status(500).send({
@@ -57,15 +57,40 @@ export default {
     //Listando Ingresos
     list: async (req,res,next) => {
         try {
-            let valor=req.query.valor;
             const reg=await models.Ingreso.find({$or:[
-                {'num_comprobante':new RegExp(valor,'i')},
-                {'serie_comprobante':new RegExp(valor,'i')}]},
+                {'num_comprobante':new RegExp},
+                {'serie_comprobante':new RegExp}]},
                 {createdAt:0})
             .populate('usuario',{nombre:1})
             .populate('persona',{nombre:1})
             .sort({'createdAt':-1});
             res.status(200).json(reg);
+        } catch(e){
+            res.status(500).send({
+                message:'Ocurrió un error'
+            });
+            next(e);
+        }
+    },
+
+    listSearch: async (req,res,next) => {
+        try {
+            let valor=req.query.valor;
+            const reg=await models.Ingreso.findOne({$or:[
+                {'tipo_comprobante':new RegExp(valor,'i')},
+                {"articulo":new RegExp(valor,'i')},
+                {'serie_comprobante':new RegExp(valor,'i')}]},
+                {createdAt:0})
+            .populate('usuario',{nombre:1})
+            .populate('persona',{nombre:1})
+            .sort({'createdAt':-1});
+            if (!reg) {
+                res.status(404).send({
+                    message: 'No se encontraron resultados'
+                });
+            } else {
+                res.status(200).json(reg);
+            }
         } catch(e){
             res.status(500).send({
                 message:'Ocurrió un error'
@@ -132,7 +157,7 @@ export default {
                 ]
             ).limit(12);
 
-            res.status(200).json(reg);
+            res.status(200).json({reg});
         } catch(e){
                 res.status(500).send({
                     message:'Ocurrió un error'

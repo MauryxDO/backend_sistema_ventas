@@ -3,7 +3,7 @@ import models from '../models';
 export default{
     obtenerChat: async( req, res ) => {
 
-        const miId = req.uid;
+        const miId = req._id;
         const mensajesDe = req.params.de;
     
         const last30 = await models.Mensaje.find({
