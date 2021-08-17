@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import token from '../services/token';
 const { transporter } = require('../utils/passwordReset');
 export default {
-
+//_id
     //Agregar Usuario
     add: async (req,res,next) =>{
         try {
@@ -46,7 +46,7 @@ export default {
     //Obtener Usuario por ID
     query: async (req,res,next) => {
         try {
-            const reg=await models.Usuario.findOne({uid:req.query.uid});
+            const reg=await models.Usuario.findOne({_id:req.query._id});
             if (!reg){
                 res.status(404).send({
                     message: 'El registro no existe'
@@ -126,7 +126,7 @@ export default {
     //Habilitar usuario acceso al sistema
     activate: async (req,res,next) => {
         try {
-            const reg = await models.Usuario.findByIdAndUpdate({uid:req.body.uid},{estado:1});
+            const reg = await models.Usuario.findByIdAndUpdate({_id:req.body._id},{estado:1});
             res.status(200).json(reg);
         } catch(e){
             res.status(500).send({
@@ -139,7 +139,7 @@ export default {
     //inhabilitar usuario acceso al sistema
     deactivate:async (req,res,next) => {
         try {
-            const reg = await models.Usuario.findByIdAndUpdate({uid:req.body.uid},{estado:0});
+            const reg = await models.Usuario.findByIdAndUpdate({_id:req.body._id},{estado:0});
             res.status(200).json(reg);
         } catch(e){
             res.status(500).send({
@@ -159,7 +159,7 @@ export default {
                 let match = await bcrypt.compare(req.body.password,user.password);
                 if (match){
                     //Generando token al usuario por medio del ID
-                    let tokenReturn = await token.encode(user.uid);
+                    let tokenReturn = await token.encode(user._id);
                     res.status(200).json({user,tokenReturn});
                 } else{
                     res.status(404).send({
@@ -203,7 +203,7 @@ export default {
                 });
             }
             // generar token y enviar email
-            let tokenReturn = await token.encode(user.uid);
+            let tokenReturn = await token.encode(user._id);
             user.resetToken = tokenReturn;
 
             await transporter.sendMail({
@@ -237,7 +237,7 @@ export default {
     //Validación de tokens
     newPassword: async(req,res,next)=>{
         try {
-            let tokenReturn = await token.encode(user.uid);
+            let tokenReturn = await token.encode(user._id);
             let password = await  models.Usuario.findOne({password:req.body.password});
             //validar el token
             const user = await models.Usuario.findOne({ 

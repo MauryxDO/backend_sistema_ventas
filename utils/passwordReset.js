@@ -10,5 +10,4 @@ export const transporter = nodemailer.createTransport({
 });
 
 transporter.verify().then(()=>{
-    console.log('Listo para enviar emails')
 })

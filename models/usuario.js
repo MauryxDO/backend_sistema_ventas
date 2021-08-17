@@ -11,11 +11,6 @@ const usuarioSchema = new Schema({
     online: {type: Boolean, default: false}
 });
 
-usuarioSchema.method('toJSON', function() {
-    const { __v, _id, password, ...object } = this.toObject();
-    object.uid = _id;
-    return object;
-});
 
 const Usuario = mongoose.model('usuario',usuarioSchema);
 export default Usuario;

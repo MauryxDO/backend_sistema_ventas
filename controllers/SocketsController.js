@@ -2,17 +2,17 @@ import models from '../models';
 
 export default{
     
-    usuarioConectado: async( uid ) => {
+    usuarioConectado: async( _id ) => {
 
-        const usuario = await models.Usuario.findById(uid);
+        const usuario = await models.Usuario.findById(_id);
         usuario.online = true;
         await usuario.save();
         
         return usuario;
     },
     
-    usuarioDesconectado: async( uid ) => {
-        const usuario = await models.Usuario.findById(uid);
+    usuarioDesconectado: async( _id ) => {
+        const usuario = await models.Usuario.findById(_id);
         usuario.online = false;
         await usuario.save();
         

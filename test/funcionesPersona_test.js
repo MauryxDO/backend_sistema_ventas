@@ -6,24 +6,29 @@ require('dotenv').config()
 chai.use(chaiHttp);
 const url = process.env.db;
 const tokenReturn = process.env.tokenR;
-describe("Funciones de Categoria", ()=>{
+describe("Funciones de Persona", ()=>{
     before(()=>{
-        console.log("Probando las funciones de Categoria");
+        console.log("Probando las funciones de Persona");
     });
 
     after(()=>{
         console.log("Fin de las pruebas")
     });
 
-    describe("Función Agregar Categoria", ()=>{
+    //Add
+    
+    describe("Función Agregar persona", ()=>{
 
-        it("Debe registrar una Categoria", (done)=>{
+        it("Debe registrar un persona", (done)=>{
             chai.request(url)
-            .post('/api/categoria/add')
+            .post('/api/persona/add')
             .set({'token': `${tokenReturn}`})
             .send({
-                nombre: 'Cosmeticos',
-                descripcion: 'Productos para la piel'
+                tipo_persona: 'Cliente',
+                nombre: 'Liliana Paredes',
+                direccion: 'Calle Reforma #134',
+                telefono: '2431221203',
+                email: 'lili@gmail.com'
             })
             .end(function(err, res){
                 //console.log(res);
@@ -33,13 +38,16 @@ describe("Funciones de Categoria", ()=>{
             });
         });
 
-        it("Debe rechazar si ya existe la categoria", (done)=>{
+        it("Debe rechazar si ya existe el email", (done)=>{
             chai.request(url)
-            .post('/api/categoria/add')
+            .post('/api/persona/add')
             .set({'token': `${tokenReturn}`})
             .send({
-                nombre: 'Cosmeticos',
-                descripcion: 'Productos para la piel'
+                tipo_persona: 'Cliente',
+                nombre: 'Liliana Paredes',
+                direccion: 'Calle Reforma #134',
+                telefono: '2431221203',
+                email: 'lili@gmail.com'
             })
             .end(function(err, res){
                 //console.log(res);
@@ -49,44 +57,28 @@ describe("Funciones de Categoria", ()=>{
             });
         });
 
-        it("Debe rechazar si no hay token", (done)=>{
-            chai.request(url)
-            .post('/api/categoria/add')
-            .send({
-                nombre: 'uñas',
-                descripcion: 'Productos para la piel'
-            })
-            .end(function(err, res){
-                //console.log(res);
-                expect(res).to.have.status(404);
-                expect(res.body).to.have.property('message');
-                done();
-            });
-        });
 
         it("Debe rechazar token no autorizado", (done)=>{
             chai.request(url)
-            .post('/api/categoria/add')
+            .post('/api/persona/list')
             .set({'token': `123${tokenReturn}`})
-            .send({
-                nombre: 'uñas',
-                descripcion: 'Productos para la piel'
-            })
             .end(function(err, res){
                 //console.log(res);
-                expect(res).to.have.status(403);
-                expect(res.body).to.have.property('message');
+                expect(res).to.have.status(404);
                 done();
             });
         });
 
         it("Debe rechazar si hay campos vacios", (done)=>{
             chai.request(url)
-            .post('/api/categoria/add')
+            .post('/api/persona/add')
             .set({'token': `${tokenReturn}`})
             .send({
+                tipo_persona: '',
                 nombre: '',
-                descripcion: 'Productos para la piel'
+                direccion: 'Calle Reforma #134',
+                telefono: '2431221203',
+                email: 'lli@gmail.com'
             })
             .end(function(err, res){
                 //console.log(res);
@@ -103,9 +95,9 @@ describe("Funciones de Categoria", ()=>{
     //Funciones Listar, buscar, actualizar y eliminar
     describe("Funciones Listar, buscar, actualizar y eliminar", ()=>{
         
-        it('Debe listar categorias', (done)=>{
+        it('Debe listar a las personas', (done)=>{
             chai.request(url)
-            .get('/api/categoria/list')
+            .get('/api/persona/list')
             .set({'token': `${tokenReturn}`})
             .end((err, res)=>{
                 //id = res.body[res.body.length - 1]._id;
@@ -114,9 +106,9 @@ describe("Funciones de Categoria", ()=>{
             });
         });
 
-        it("Debe Buscar la palabra cabeza", (done)=>{
+        it("Debe Buscar a la persona Lucia", (done)=>{
             chai.request(url)
-            .get('/api/categoria/listSearch?valor=cabeza')
+            .get('/api/persona/listSearch?valor=Lucia')
             .set({'token': `${tokenReturn}`})
             .end(function(err, res){
                 expect(res).to.have.status(200);
@@ -126,7 +118,7 @@ describe("Funciones de Categoria", ()=>{
 
         it("Debe regresar error si no se encuentran resultados", (done)=>{
             chai.request(url)
-            .get('/api/categoria/listSearch?valor=hola')
+            .get('/api/persona/listSearch?valor=hola')
             .set({'token': `${tokenReturn}`})
             .end(function(err, res){
                 expect(res).to.have.status(404);
@@ -135,14 +127,27 @@ describe("Funciones de Categoria", ()=>{
             });
         });
 
-        it('Debe actualizar la categoria', (done)=>{
+        it("Debe filtrar solo a proovedores", (done)=>{
             chai.request(url)
-            .put('/api/categoria/update')
+            .get('/api/persona/listProveedores')
+            .set({'token': `${tokenReturn}`})
+            .end(function(err, res){
+                expect(res).to.have.status(200);
+                done();
+            });
+        });
+
+        it('Debe actualizar a la persona', (done)=>{
+            chai.request(url)
+            .put('/api/persona/update')
             .set({'token': `${tokenReturn}`})
             .send({
-                _id:'60ebfaa1b69c6024ccef563c',
-                nombre: 'Belleza y accesorios',
-                descripcion: 'Productos para el cuidado de pies a cabeza'
+                _id:'611ae58a7407d7335cb2322f',
+                tipo_persona: 'Cliente',
+                nombre: 'Lucía Alvez',
+                direccion: 'Calle Reforma #134',
+                telefono: '2431221203',
+                email: 'lulu@gmail.com'
             })
             .end((err, res)=>{
                 expect(res).to.have.status(200);
@@ -153,12 +158,15 @@ describe("Funciones de Categoria", ()=>{
 
         it('No debe actualizar si hay valores vacios', (done)=>{
             chai.request(url)
-            .put('/api/categoria/update')
+            .put('/api/persona/update')
             .set({'token': `${tokenReturn}`})
             .send({
-                _id: '60ebfaa1b69c6024ccef563c',
-                nombre: '',
-                descripcion: 'Productos para el cuidado de pies a cabeza'
+                _id:'611ae58a7407d7335cb2322f',
+                tipo_persona: '',
+                nombre: 'Lucía Alvez',
+                direccion: 'Calle Reforma #134',
+                telefono: '2431221203',
+                email: ''
             })
             .end((err, res)=>{
                 expect(res).to.have.status(400);
@@ -166,15 +174,18 @@ describe("Funciones de Categoria", ()=>{
                 done();
             });
         });
-
-        it('No debe actualizar si ya existe la categoria', (done)=>{
+        
+        it('Debe detectar email existente', (done)=>{
             chai.request(url)
-            .put('/api/categoria/update')
+            .put('/api/persona/update')
             .set({'token': `${tokenReturn}`})
             .send({
-                _id: '60ebfaa1b69c6024ccef563c',
-                nombre: 'Belleza y accesorios',
-                descripcion: 'Productos para el cuidado de pies a cabeza'
+                _id:'611ae58a7407d7335cb2322f',
+                tipo_persona: 'Cliente',
+                nombre: 'Lucía Alvez',
+                direccion: 'Calle Reforma #134',
+                telefono: '2431221203',
+                email: 'lili@gmail.com'
             })
             .end((err, res)=>{
                 expect(res).to.have.status(400);
@@ -182,13 +193,13 @@ describe("Funciones de Categoria", ()=>{
                 done();
             });
         });
-        
-        it('Debe eliminar la categoria',(done)=>{
+
+        it('Debe eliminar el registro',(done)=>{
             chai.request(url)
-            .delete('/api/categoria/remove')
+            .delete('/api/persona/remove')
             .set({'token': `${tokenReturn}`})
             .send({
-                _id:'611b86bdf824db317827b82a'
+                _id:'611b924c6425772150441cc0'
             })
             .end((err, res)=>{
                 expect(res).to.have.status(200);
@@ -197,12 +208,12 @@ describe("Funciones de Categoria", ()=>{
             });
         });
 
-        it('Validar si el ID existe',(done)=>{
+        it('Al eliminar detectar si el registro existe',(done)=>{
             chai.request(url)
-            .delete('/api/categoria/remove')
+            .delete('/api/persona/remove')
             .set({'token': `${tokenReturn}`})
             .send({
-                _id:'611b7b3f8035582f10493b03'
+                _id:'611b8e7096786e3590f45b02'
             })
             .end((err, res)=>{
                 expect(res).to.have.status(404);
@@ -213,7 +224,7 @@ describe("Funciones de Categoria", ()=>{
 
         it('Debe detectar si no se ingresa el id',(done)=>{
             chai.request(url)
-            .delete('/api/categoria/remove')
+            .delete('/api/persona/remove')
             .set({'token': `${tokenReturn}`})
             .send({
                 _id:''
@@ -225,12 +236,12 @@ describe("Funciones de Categoria", ()=>{
             });
         });
 
-        it('Debe desahabilitar una categoria',(done)=>{
+        it('Debe habilitar a la persona',(done)=>{
             chai.request(url)
-            .put('/api/categoria/deactivate')
+            .put('/api/persona/activate')
             .set({'token': `${tokenReturn}`})
             .send({
-                _id:'611b83ee1d194229801f346e'
+                _id:'611b8ecdc18c9e295cd3946f'
             })
             .end((err, res)=>{
                 expect(res).to.have.status(200);

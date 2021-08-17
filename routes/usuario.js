@@ -2,7 +2,7 @@ import routerx from 'express-promise-router';
 import usuarioController from '../controllers/UsuarioController';
 import auth from '../middlewares/auth';
 const { check }  = require('express-validator');
-const { validarCampos, validarid } = require('../middlewares/validarCampos');
+const { validarCampos } = require('../middlewares/validarCampos');
 
 const router=routerx();
 

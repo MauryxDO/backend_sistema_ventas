@@ -6,15 +6,15 @@ import models from '../models';
 async function checkToken(token){
     let __id = null;
     try{
-        const {uid}= await jwt.decode(token);
-        __id = uid;
+        const {_id}= await jwt.decode(token);
+        __id = _id;
     } catch (e){
         return false;
     }
     //Si el usuario esta activo seguira teniendo acceso al sistema
-    const user = await models.Usuario.findOne({uid:__id,estado:1});
+    const user = await models.Usuario.findOne({_id:__id,estado:1});
     if (user){
-        const token = jwt.sign({uid:__id},'clavesecretaparagenerartoken',{expiresIn:'1d'});
+        const token = jwt.sign({_id:__id},'clavesecretaparagenerartoken',{expiresIn:'1d'});
         return {token,rol:user.rol};
     } else {
         return false;
@@ -23,16 +23,16 @@ async function checkToken(token){
 
 export default {
     //genera token
-    encode: async (uid) => {                    
-        const token = jwt.sign({uid:uid},'clavesecretaparagenerartoken',{expiresIn: '1d'});//<< Tiempo de expiración del token
+    encode: async (_id) => {                    
+        const token = jwt.sign({_id:_id},'clavesecretaparagenerartoken',{expiresIn: '1d'});//<< Tiempo de expiración del token
         return token;
     },
     //recibir token y verificar si esta correcto
     decode: async (token) => {
         try {
-            const {uid} = await jwt.verify(token,'clavesecretaparagenerartoken');
+            const {_id} = await jwt.verify(token,'clavesecretaparagenerartoken');
             //Usuario Activo en estado, es decir que puede interactuar con el sistema
-            const user = await models.Usuario.findOne({uid,estado:1});
+            const user = await models.Usuario.findOne({_id,estado:1});
             if (user){
                 return user;
             } else{
