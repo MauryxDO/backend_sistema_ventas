@@ -24,11 +24,11 @@ describe("Funciones de Persona", ()=>{
             .post('/api/persona/add')
             .set({'token': `${tokenReturn}`})
             .send({
-                tipo_persona: 'Cliente',
-                nombre: 'Liliana Paredes',
-                direccion: 'Calle Reforma #134',
+                tipo_persona: 'Almacenero',
+                nombre: 'Abad Paredes',
+                direccion: 'Calle Reforma #136',
                 telefono: '2431221203',
-                email: 'lili@gmail.com'
+                email: 'abad@gmail.com'
             })
             .end(function(err, res){
                 //console.log(res);
@@ -43,11 +43,11 @@ describe("Funciones de Persona", ()=>{
             .post('/api/persona/add')
             .set({'token': `${tokenReturn}`})
             .send({
-                tipo_persona: 'Cliente',
-                nombre: 'Liliana Paredes',
-                direccion: 'Calle Reforma #134',
+                tipo_persona: 'Almacenero',
+                nombre: 'Abad Paredes',
+                direccion: 'Calle Reforma #136',
                 telefono: '2431221203',
-                email: 'lili@gmail.com'
+                email: 'abad@gmail.com'
             })
             .end(function(err, res){
                 //console.log(res);
@@ -106,9 +106,9 @@ describe("Funciones de Persona", ()=>{
             });
         });
 
-        it("Debe Buscar a la persona Lucia", (done)=>{
+        it("Debe Buscar a la persona Lucía", (done)=>{
             chai.request(url)
-            .get('/api/persona/listSearch?valor=Lucia')
+            .get('/api/persona/listSearch?valor=Lucía')
             .set({'token': `${tokenReturn}`})
             .end(function(err, res){
                 expect(res).to.have.status(200);
@@ -145,9 +145,9 @@ describe("Funciones de Persona", ()=>{
                 _id:'611ae58a7407d7335cb2322f',
                 tipo_persona: 'Cliente',
                 nombre: 'Lucía Alvez',
-                direccion: 'Calle Reforma #134',
+                direccion: 'Calle Reforma #132',
                 telefono: '2431221203',
-                email: 'lulu@gmail.com'
+                email: 'luvy@gmail.com'
             })
             .end((err, res)=>{
                 expect(res).to.have.status(200);
@@ -199,7 +199,7 @@ describe("Funciones de Persona", ()=>{
             .delete('/api/persona/remove')
             .set({'token': `${tokenReturn}`})
             .send({
-                _id:'611b924c6425772150441cc0'
+                _id:'612071290fe41e33a0080781'
             })
             .end((err, res)=>{
                 expect(res).to.have.status(200);

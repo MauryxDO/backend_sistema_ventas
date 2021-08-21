@@ -24,7 +24,7 @@ describe("Funciones de Articulos", ()=>{
             .post('/api/articulo/add')
             .set({'token': `${tokenReturn}`})
             .send({
-                categoria:"6114a5e07290192e40931ee4",
+                categoria:"611f0300dcdfb21264757b8f",
                 codigo: "1",
                 nombre: "Pomada",
                 descripcion: "Prueba",
@@ -44,7 +44,7 @@ describe("Funciones de Articulos", ()=>{
             .post('/api/articulo/add')
             .set({'token': `${tokenReturn}`})
             .send({
-                categoria:"6114a5e07290192e40931ee4",
+                categoria:"611f0300dcdfb21264757b8f",
                 codigo: "1",
                 nombre: "Pomada",
             })
@@ -61,7 +61,7 @@ describe("Funciones de Articulos", ()=>{
             .post('/api/articulo/add')
             .set({'token': `${tokenReturn}`})
             .send({
-                categoria:"6114a5e07290192e40931ee4",
+                categoria:"611f0300dcdfb21264757b8f",
                 codigo: "1",
                 nombre: "Pomada",
             })
@@ -167,11 +167,11 @@ describe("Funciones de Articulos", ()=>{
             .put('/api/articulo/update')
             .set({'token': `${tokenReturn}`})
             .send({
-                _id: '611b6d38cc4726098801b234',
-                categoria:"6114a5e07290192e40931ee4",
-                codigo: "21",
-                nombre: "Prueba",
-                descripcion: "Prueba",
+                _id: '611f04143e719c25b03128ad',
+                categoria:"611f0300dcdfb21264757b8f",
+                codigo: "32",
+                nombre: "test1",
+                descripcion: "test1",
                 precio_venta: 50,
                 stock: 20
             })
@@ -187,8 +187,8 @@ describe("Funciones de Articulos", ()=>{
             .put('/api/articulo/update')
             .set({'token': `${tokenReturn}`})
             .send({
-                _id: '611b6d38cc4726098801b234',
-                categoria:"6114a5e07290192e40931ee4",
+                _id: '611f04143e719c25b03128ad',
+                categoria:"611f0300dcdfb21264757b8f",
                 codigo: "",
                 nombre: "",
                 descripcion: "Prueba",
@@ -207,8 +207,8 @@ describe("Funciones de Articulos", ()=>{
             .put('/api/articulo/update')
             .set({'token': `${tokenReturn}`})
             .send({
-                _id: '611b6d38cc4726098801b234',
-                categoria:"6114a5e07290192e40931ee4",
+                _id: '611f04143e719c25b03128ad',
+                categoria:"611f0300dcdfb21264757b8f",
                 codigo: "12",
                 nombre: "s",
                 descripcion: "Prueba",
@@ -227,7 +227,7 @@ describe("Funciones de Articulos", ()=>{
             .delete('/api/articulo/remove')
             .set({'token': `${tokenReturn}`})
             .send({
-                _id:'611b7d38feca0b3224c621d2'
+                _id:'612070ae3bf0431cece1da2f'
             })
             .end((err, res)=>{
                 expect(res).to.have.status(200);

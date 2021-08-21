@@ -1,9 +1,10 @@
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 const expect = require('chai').expect;
+require('dotenv').config()
 
 chai.use(chaiHttp);
-const url = 'http://localhost:5000';
+const url = process.env.db;
 
 //Registro Usuario
 describe("Registro y autenticación", ()=>{
