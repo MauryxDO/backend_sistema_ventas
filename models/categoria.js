@@ -1,11 +1,12 @@
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema;
+import mongoose,{Schema} from 'mongoose';
 
-// crear Schema para customers
-var CategoriaSchema = Schema({
-    titulo: String,
-    descripcion: String,
-    
+const categoriaSchema = new Schema({
+    nombre:{type:String, maxlength:50,unique:true,required:true},
+    descripcion: {type:String,maxlength:255},
+    estado: {type:Number,default:1},
+    createdAt:{type:Date,default:Date.now}
 });
 
-module.exports = mongoose.model('categoria',CategoriaSchema);
+const Categoria = mongoose.model('categoria',categoriaSchema);
+
+export default Categoria;

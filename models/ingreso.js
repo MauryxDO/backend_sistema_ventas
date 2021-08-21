@@ -1,11 +1,13 @@
 import mongoose,{Schema} from 'mongoose';
-const ventaSchema = new Schema({
+const ingresoSchema = new Schema({
     usuario:{type: Schema.ObjectId, ref: 'usuario',required:true },
     persona:{ type: Schema.ObjectId, ref: 'persona',required:true },
     tipo_comprobante:{ type:String,maxlength:20,required:true},
     serie_comprobante: { type:String,maxlength:7, unique:true},
     num_comprobante: { type:String,maxlength:10,required:true, unique:true},
+    impuesto:{ type:Number, required:true},
     total:{ type:Number, required:true},
+    //Modelar de manera embebida la relación 1 a muchos
     detalles: [{
         _id:{
             type:String,
@@ -22,14 +24,10 @@ const ventaSchema = new Schema({
         precio:{
             type:Number,
             required:true
-        },
-        descuento:{
-            type:Number,
-            required:true
         }
     }],
     estado: { type:Number, default:1},
     createdAt: { type: Date, default: Date.now }
 });
-const Venta = mongoose.model('venta',ventaSchema);
-export default Venta;
+const Ingreso = mongoose.model('ingreso',ingresoSchema);
+export default Ingreso;
