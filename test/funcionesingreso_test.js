@@ -24,8 +24,8 @@ describe("Funciones de ingreso", ()=>{
                 "usuario": {"_id":"6112d5f79ec75b15c0d74c67"},
                 "persona":{"_id":"611b927b1f47c1379c9b701e"},
                 "tipo_comprobante":"FACTURA",
-                "serie_comprobante":"001",
-                "num_comprobante":"001",
+                "serie_comprobante":"011",
+                "num_comprobante":"011",
                 "impuesto": "0.16",
                 "total":"2000",
                 "detalles":[
@@ -55,8 +55,8 @@ describe("Funciones de ingreso", ()=>{
                 "usuario": {"_id":"6112d5f79ec75b15c0d74c67"},
                 "persona":{"_id":"611b927b1f47c1379c9b701e"},
                 "tipo_comprobante":"FACTURA",
-                "serie_comprobante":"001",
-                "num_comprobante":"001",
+                "serie_comprobante":"011",
+                "num_comprobante":"011",
                 "impuesto": "0.16",
                 "total":"2000",
                 "detalles":[
@@ -86,8 +86,8 @@ describe("Funciones de ingreso", ()=>{
                 "usuario": {"_id":"6112d5f79ec75b15c0d74c67"},
                 "persona":{"_id":"611b927b1f47c1379c9b701e"},
                 "tipo_comprobante":"FACTURA",
-                "serie_comprobante":"002",
-                "num_comprobante":"002",
+                "serie_comprobante":"011",
+                "num_comprobante":"011",
                 "impuesto": "0.16",
                 "total":"",
                 "detalles":[

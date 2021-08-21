@@ -1,15 +1,18 @@
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 const expect = require('chai').expect;
+require('dotenv').config()
 
 chai.use(chaiHttp);
-const url = 'http://localhost:5000';
-const tokenReturn = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Mjg2MzM2NDksImV4cCI6MTYyODcyMDA0OX0.UNcRWTnP-O3yXbrWirM--QRkMlLaXPQX3KCysEzwqNg';
-const tokenVendedor = 'JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Mjg2MzQyNDMsImV4cCI6MTYyODcyMDY0M30.NWjssyj30UIBMtprvR9mzQXq5htyKQakWByJTRhilHw';
+const url = process.env.db;
+const tokenReturn = process.env.tokenR;
+const tokenVendedor = process.env.tokenV;
+
 describe("Registro de usuarios", ()=>{
 
     //Add
     describe("Registrar Usuario", ()=>{
+
         it("Debe registrar usuario", (done)=>{
             chai.request(url)
             .post('/api/usuario/add')
@@ -75,11 +78,11 @@ describe("Registro de usuarios", ()=>{
             .post('/api/usuario/add')
             .set({'token': `${tokenVendedor}`})
             .send({
-                rol:"Administrador",
-                nombre:"Yolito",
+                rol:"Almacenero",
+                nombre:"Juan",
                 direccion: "Calle reforma #134",
                 telefono: "242314423",
-                email: "miau@gmail.com",
+                email: "juan@gmail.com",
                 password:"123456",
             })
             .end(function(err, res){

@@ -14,6 +14,7 @@ describe("Funciones de venta", ()=>{
     after(()=>{
         console.log("Fin de las pruebas")
     });
+
     describe("Función Agregar ingreso", ()=>{
 
         it("Debe registrar una Venta", (done)=>{
@@ -24,8 +25,8 @@ describe("Funciones de venta", ()=>{
                 "usuario": {"_id":"6112d5f79ec75b15c0d74c67"},
                 "persona":{"_id":"611b927b1f47c1379c9b701e"},
                 "tipo_comprobante":"FACTURA",
-                "serie_comprobante":"001",
-                "num_comprobante":"001",
+                "serie_comprobante":"004",
+                "num_comprobante":"004",
                 "total":"1375",
                 "detalles":[
                     {
@@ -55,8 +56,8 @@ describe("Funciones de venta", ()=>{
                 "usuario": {"_id":"6112d5f79ec75b15c0d74c67"},
                 "persona":{"_id":"611b927b1f47c1379c9b701e"},
                 "tipo_comprobante":"FACTURA",
-                "serie_comprobante":"001",
-                "num_comprobante":"001",
+                "serie_comprobante":"004",
+                "num_comprobante":"004",
                 "total":"1375",
                 "detalles":[
                     {
@@ -85,8 +86,8 @@ describe("Funciones de venta", ()=>{
                 "usuario": {"_id":"6112d5f79ec75b15c0d74c67"},
                 "persona":{"_id":"611b927b1f47c1379c9b701e"},
                 "tipo_comprobante":"FACTURA",
-                "serie_comprobante":"002",
-                "num_comprobante":"002",
+                "serie_comprobante":"011",
+                "num_comprobante":"011",
                 "total":"",
                 "detalles":[
                     {
@@ -226,7 +227,7 @@ describe("Funciones de venta", ()=>{
             });
         });
         
-        it("Debe deshabilitar el venta y que reduzca el stock", (done)=>{
+        it("Debe deshabilitar la venta y que reduzca el stock", (done)=>{
             chai.request(url)
             .put('/api/venta/activate')
             .set({'token': `${tokenReturn}`})
@@ -241,7 +242,7 @@ describe("Funciones de venta", ()=>{
             });
         });
 
-        it("Debe habilitar el venta y que aumente el stock", (done)=>{
+        it("Debe habilitar la venta y que aumente el stock", (done)=>{
             chai.request(url)
             .put('/api/venta/deactivate')
             .set({'token': `${tokenReturn}`})

@@ -22,8 +22,8 @@ describe("Funciones de Categoria", ()=>{
             .post('/api/categoria/add')
             .set({'token': `${tokenReturn}`})
             .send({
-                nombre: 'Cosmeticos',
-                descripcion: 'Productos para la piel'
+                nombre: 'Tintes',
+                descripcion: 'Todo tipos de tintes'
             })
             .end(function(err, res){
                 //console.log(res);
@@ -38,8 +38,8 @@ describe("Funciones de Categoria", ()=>{
             .post('/api/categoria/add')
             .set({'token': `${tokenReturn}`})
             .send({
-                nombre: 'Cosmeticos',
-                descripcion: 'Productos para la piel'
+                nombre: 'Tintes',
+                descripcion: 'Todo tipos de tintes'
             })
             .end(function(err, res){
                 //console.log(res);
@@ -98,7 +98,7 @@ describe("Funciones de Categoria", ()=>{
 
 
     });
-    
+
 
     //Funciones Listar, buscar, actualizar y eliminar
     describe("Funciones Listar, buscar, actualizar y eliminar", ()=>{
@@ -141,7 +141,7 @@ describe("Funciones de Categoria", ()=>{
             .set({'token': `${tokenReturn}`})
             .send({
                 _id:'60ebfaa1b69c6024ccef563c',
-                nombre: 'Belleza y accesorios',
+                nombre: 'Belleza',
                 descripcion: 'Productos para el cuidado de pies a cabeza'
             })
             .end((err, res)=>{
@@ -173,7 +173,7 @@ describe("Funciones de Categoria", ()=>{
             .set({'token': `${tokenReturn}`})
             .send({
                 _id: '60ebfaa1b69c6024ccef563c',
-                nombre: 'Belleza y accesorios',
+                nombre: 'Belleza',
                 descripcion: 'Productos para el cuidado de pies a cabeza'
             })
             .end((err, res)=>{
@@ -188,7 +188,7 @@ describe("Funciones de Categoria", ()=>{
             .delete('/api/categoria/remove')
             .set({'token': `${tokenReturn}`})
             .send({
-                _id:'611b86bdf824db317827b82a'
+                _id:'61206f54cbffd91f3c714342'
             })
             .end((err, res)=>{
                 expect(res).to.have.status(200);
